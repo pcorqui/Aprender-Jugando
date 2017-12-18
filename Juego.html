@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>GameDev Canvas Workshop</title>
+    <style>
+        *{padding: 0; margin: 0;}
+        canvas{background: #eee; display: block;margin: 0 auto;}
+    </style>
+</head>
+<body>
+   <img id="ave" src="bird.png" width="100" height="100">
+<canvas id = "miLienzo" width="480" height="320"></canvas>
+
+<script>
+var canvas = document.getElementById("miLienzo"); //obtiene el objeto milienzo declarado en el html
+var ctx = canvas.getContext("2d"); //obtiene el contexto 2d
+
+//variables de control
+var ballRadius = 10;        //radio de la imagen
+var x = canvas.width/2;     //coordenada x dentro del canvas
+var y = canvas.height-100;   //coordenada y dentro del canvas
+var dx = 2;                 //aumento de la coordenada
+var dy = -2;
+
+//variables de manipulacion
+var derechaPresionada = false;
+var izquierdaPresionada = false;
+document.addEventListener("keydown", manejadorFlechaArriba,false);
+//document.addEventListener("keyup", keyupHadler,false);
+
+function manejadorFlechaArriba(){
+    x = 0;
+}
+
+
+//funcion que pinta la imagen dentro del lienzo
+function pajarito(){
+
+    var img = document.getElementById("ave"); //obtencion de la imagen
+    ctx.drawImage(img,x,y,100,100);//parametros(imagen a pintar, coordenada x, coordenada y, anchoImagen, LargoImagen)         
+}//de pajarito
+
+//movimiento horizontal de la imagen recibe dos parametros la coordenada y la velocidad de desplazamiento
+function movHorizontal(h,m){
+    x = h;
+    x+= m;
+}
+
+
+//funcion principal dibujadora
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pajarito();     //dibuja un pajarito
+    movHorizontal(x,dx);
+
+    
+}//de draw
+
+
+
+
+//refresco del canvas
+setInterval(draw, 30);
+</script>
+
+</body>
+</html>
