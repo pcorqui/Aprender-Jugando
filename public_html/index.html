@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>GameDev Canvas Workshop</title>
+    <style>
+        *{padding: 0; margin: 0;}
+        canvas{background: #eee; display: block;margin: 0 auto;}
+    </style>
+</head>
+<body>
+    
+    
+    <button id="ejecutar">ejecutar </button>
+   <img id="ave" src="bird.png" width="100" height="100">
+   <img id="auto" src = "auto.png" width = "100" height= "100">
+   <img id ="explosion" src="explosion.png" width="100" height="100">
+
+    
+<canvas id = "miLienzo" width="480" height="320"></canvas>
+
+<script>
+    //lienzo principal
+var canvas = document.getElementById("miLienzo"); //obtiene el objeto milienzo declarado en el html
+var ctx = canvas.getContext("2d"); //obtiene el contexto 2d
+var img = document.getElementById("ave"); //obtencion de la imagen
+var img2 = document.getElementById("auto");
+var img3 = document.getElementById("explosion");
+var click = 0;
+
+
+//definir un bloque de codigo
+var bloqueAlto = 10;
+var bloqueAncho = 75;
+var bloque = (canvas.width-bloqueAncho)/2;
+
+//variables de control
+
+var x = canvas.width-300;     //coordenada x dentro del canvas
+var y = canvas.height-100;  //coordenada y dentro del canvas
+var dx = 2;                 //aumento de la coordenada
+var dy = -2;
+
+
+//variables de manipulacion
+var boton = document.getElementById('ejecutar');
+
+
+//manejadores de eventos del raton
+boton.addEventListener("click",ejecutarCodigo,false);
+img3.addEventListener("click",mover,false);
+
+//manejadores de eventos del teclado 
+document.addEventListener("keydown",manejadorTeclaPresionada,false);
+document.addEventListener("keyup",manejadorTeclaLevantada,false);
+
+//funciones manejadores de eventos
+function mover(){
+    click += 1;
+        x+=100;
+    
+}
+
+function ejecutarCodigo(){
+    
+    x+=10;
+}
+
+function manejadorTeclaPresionada(e){
+    if(e.keyCode == 39){
+        derechoPresionado = true;
+    }
+    else if(e.keyCode == 37){
+        izquierdoPresionado = true;
+    }
+}
+
+function manejadorTeclaLevantada(e){
+    if(e.keyCode == 39){
+        derechoPresionado = false;
+    }
+    else if(e.keyCode == 37){
+        izquierdoPresionado = false;
+    }
+}
+
+//funcion que pinta la imagen dentro del lienzo
+function pajarito(){
+    ctx.drawImage(img2,canvas.width-100,canvas.height-100,100,100);
+    ctx.drawImage(img,x,y,100,100);//parametros(imagen a pintar, coordenada x, coordenada y, anchoImagen, LargoImagen)         
+    
+}//de pajarito
+
+//funcion que dibuja un bloque de codigo
+function dibujarBloque(){
+    ctx.beginPath();
+    ctx.rect(bloque,canvas.height-bloqueAlto,bloqueAlto,bloqueAncho);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+}
+
+//movimiento horizontal de la imagen recibe dos parametros la coordenada y la velocidad de desplazamiento
+/*function mover(h,m){
+    x = h;
+    x+= m;
+}//de movHorizontal
+*/
+
+//funcion principal dibujadora
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if(x >= canvas.width-100){
+        ctx.drawImage(img3,x,canvas.height-100,100,100);
+    }
+    else{
+            pajarito();
+    }
+        
+}//de draw
+
+
+
+
+//refresco del canvas
+setInterval(draw, 30);
+</script>
+
+</body>
+</html>
